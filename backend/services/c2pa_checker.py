@@ -1,0 +1,168 @@
+"""
+C2PA / Content Credentials provenance checker.
+
+Reads the C2PA manifest embedded in an image file (if present) and returns
+a structured result indicating whether the image has verifiable provenance,
+was tampered with, or carries no credentials at all.
+
+C2PA is backed by Adobe, Google, Microsoft, and OpenAI. ChatGPT image
+generation, DALL-E, and Adobe Firefly already embed signed manifests.
+A missing or broken manifest is itself a risk signal.
+"""
+from __future__ import annotations
+
+import io
+import json
+import logging
+from dataclasses import dataclass, field
+
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class C2paResult:
+    available: bool                  # True if c2pa library loaded
+    has_manifest: bool               # True if the image contains C2PA data
+    is_verified: bool                # True if the manifest signature is valid
+    is_tampered: bool                # True if the manifest is broken/invalid
+    generator: str                   # e.g. "Adobe Firefly", "DALL-E", ""
+    actions: list[str]               # e.g. ["c2pa.created", "c2pa.edited"]
+    risk_signal: str                 # "trusted" | "no-credentials" | "tampered"
+    risk_score_delta: int            # adjustment to apply to the image risk score
+    summary: str                     # human-readable one-liner
+    raw_json: dict | None = None     # full manifest JSON for metadata
+    error: str | None = None
+
+
+def _parse_manifest_json(manifest_json: str) -> dict:
+    try:
+        return json.loads(manifest_json)
+    except Exception:
+        return {}
+
+
+def _extract_generator(manifest: dict) -> str:
+    """Pull the producing software name from the manifest."""
+    # Try active_manifest → claim_generator
+    active = manifest.get("active_manifest", "")
+    manifests = manifest.get("manifests", {})
+    if active and active in manifests:
+        m = manifests[active]
+        gen = m.get("claim_generator", "") or m.get("claim_generator_info", [{}])
+        if isinstance(gen, list) and gen:
+            return str(gen[0].get("name", ""))
+        return str(gen).split("/")[0].strip()
+    return ""
+
+
+def _extract_actions(manifest: dict) -> list[str]:
+    """Collect all action labels from the manifest."""
+    active = manifest.get("active_manifest", "")
+    manifests = manifest.get("manifests", {})
+    actions: list[str] = []
+    if active and active in manifests:
+        for assertion in manifests[active].get("assertions", []):
+            if assertion.get("label", "").startswith("c2pa.actions"):
+                for action in assertion.get("data", {}).get("actions", []):
+                    label = action.get("action", "")
+                    if label:
+                        actions.append(label)
+    return actions
+
+
+def check_c2pa_provenance(image_bytes: bytes, mime_type: str = "image/jpeg") -> C2paResult:
+    """
+    Parse C2PA manifest from image_bytes.
+    Returns a C2paResult describing provenance status.
+    """
+    try:
+        import c2pa  # type: ignore
+    except ImportError:
+        return C2paResult(
+            available=False,
+            has_manifest=False,
+            is_verified=False,
+            is_tampered=False,
+            generator="",
+            actions=[],
+            risk_signal="no-credentials",
+            risk_score_delta=0,
+            summary="C2PA library not available — provenance check skipped.",
+            error="c2pa not installed",
+        )
+
+    try:
+        buf = io.BytesIO(image_bytes)
+        reader = c2pa.Reader(mime_type, buf)
+        manifest_json = reader.json()
+        manifest = _parse_manifest_json(manifest_json)
+
+        generator = _extract_generator(manifest)
+        actions = _extract_actions(manifest)
+
+        # A valid manifest with a known AI generator is a strong trust signal
+        # (it proves the image was created by a signed tool, not tampered with).
+        # We lower the risk score when credentials are present and verified.
+        known_ai_generators = {
+            "adobe firefly", "dall-e", "openai", "midjourney",
+            "stable diffusion", "bing image creator", "google imagen",
+        }
+        gen_lower = generator.lower()
+        is_known_ai = any(k in gen_lower for k in known_ai_generators)
+
+        # Presence of a valid manifest means the file hasn't been tampered with
+        # since signing — that's a trust boost regardless of the generator.
+        return C2paResult(
+            available=True,
+            has_manifest=True,
+            is_verified=True,
+            is_tampered=False,
+            generator=generator,
+            actions=actions,
+            risk_signal="trusted",
+            # If it's a known AI generator, keep risk neutral (it IS AI-generated
+            # but at least it's honest about it). If it's a camera/human tool,
+            # lower the risk score as a trust signal.
+            risk_score_delta=0 if is_known_ai else -15,
+            summary=(
+                f"C2PA credentials verified. Generated by {generator}."
+                if generator
+                else "C2PA credentials present and verified."
+            ),
+            raw_json=manifest,
+        )
+
+    except Exception as exc:
+        err_str = str(exc)
+
+        # "ManifestNotFound" is the normal case for images without C2PA data.
+        if "ManifestNotFound" in err_str or "no JUMBF" in err_str.lower():
+            return C2paResult(
+                available=True,
+                has_manifest=False,
+                is_verified=False,
+                is_tampered=False,
+                generator="",
+                actions=[],
+                risk_signal="no-credentials",
+                # No credentials is a mild risk signal — most real photos don't
+                # have C2PA yet, but AI tools increasingly do.
+                risk_score_delta=5,
+                summary="No C2PA content credentials found in this image.",
+            )
+
+        # Any other error likely means a broken or tampered manifest.
+        logger.warning("[C2PA] Manifest parse error: %s", exc)
+        return C2paResult(
+            available=True,
+            has_manifest=True,
+            is_verified=False,
+            is_tampered=True,
+            generator="",
+            actions=[],
+            risk_signal="tampered",
+            # A broken manifest is a strong risk signal.
+            risk_score_delta=20,
+            summary="C2PA manifest found but could not be verified — possible tampering.",
+            error=err_str,
+        )

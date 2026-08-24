@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TruthLens | AI Verification Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TruthLens home">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="brand-core"></span>
+        </span>
+        <span class="brand-text">TruthLens</span>
+      </a>
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Live threat scoring
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="eyebrow-pulse"></span>
+            Multilingual Threat &amp; Scam Detection
+          </p>
+          <h1>AI Deepfake &amp; Scam Verification Assistant</h1>
+          <p class="subtitle">Detect multilingual text scams, image manipulation, and malicious URLs in seconds using AI-powered verification.</p>
+
+          <div class="cta-group">
+            <button class="btn btn-primary" id="verifyNowButton" type="button" aria-controls="verificationModal">Verify Now</button>
+            <button class="btn btn-secondary" id="liveDemoButton" type="button" aria-controls="verificationModal">Live Demo</button>
+          </div>
+
+          <div class="signal-strip">
+            <div class="signal-chip">
+              <span class="chip-title">Multilingual Messages</span>
+              <span class="chip-value">English, Kannada, Hindi, and Telugu</span>
+            </div>
+            <div class="signal-chip">
+              <span class="chip-title">Image Forensics</span>
+              <span class="chip-value">OCR text extraction &amp; image authenticity</span>
+            </div>
+            <div class="signal-chip">
+              <span class="chip-title">URL Shield</span>
+              <span class="chip-value">Phishing links, fake domains, and safety scoring</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="orb orb-a" aria-hidden="true"></div>
+          <div class="orb orb-b" aria-hidden="true"></div>
+          <div class="orb orb-c" aria-hidden="true"></div>
+          <div class="scan-grid" aria-hidden="true"></div>
+          <div class="scan-beam" aria-hidden="true"></div>
+
+          <div class="shield-zone" aria-hidden="true">
+            <div class="radar-ring ring-a"></div>
+            <div class="radar-ring ring-b"></div>
+            <div class="shield-shell">
+              <div class="shield-glow"></div>
+              <div class="shield-lines"></div>
+
+              <svg class="shield-icon" viewBox="0 0 240 280" role="presentation">
+                <defs>
+                  <linearGradient id="shieldFill" x1="30" y1="20" x2="210" y2="250" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#70f4de" stop-opacity="0.34"></stop>
+                    <stop offset="0.58" stop-color="#238cf5" stop-opacity="0.2"></stop>
+                    <stop offset="1" stop-color="#ff9d52" stop-opacity="0.18"></stop>
+                  </linearGradient>
+                  <linearGradient id="shieldStroke" x1="47" y1="20" x2="193" y2="250" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#b9fff3"></stop>
+                    <stop offset="0.52" stop-color="#7bcaff"></stop>
+                    <stop offset="1" stop-color="#ffbc7d"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M120 16L198 46V134C198 196 167 235 120 264C73 235 42 196 42 134V46L120 16Z" fill="url(#shieldFill)" stroke="url(#shieldStroke)" stroke-width="5"></path>
+                <path d="M76 109C92 92 112 84 135 84C157 84 174 95 185 113" stroke="#d8fffa" stroke-width="7" stroke-linecap="round"></path>
+                <path d="M73 111C89 136 111 149 138 149C163 149 181 138 191 121" stroke="#79f9df" stroke-width="5" stroke-linecap="round" opacity="0.9"></path>
+                <circle cx="129" cy="114" r="19" fill="#0c1a2b" stroke="#f7fffb" stroke-width="5"></circle>
+                <circle cx="129" cy="114" r="8" fill="#7ef4da"></circle>
+                <path d="M77 171H164" stroke="#a0d8ff" stroke-width="5" stroke-linecap="round" opacity="0.84"></path>
+                <path d="M91 190H149" stroke="#ffb566" stroke-width="5" stroke-linecap="round" opacity="0.72"></path>
+                <path d="M92 66L81 82" stroke="#ffb566" stroke-width="4" stroke-linecap="round" opacity="0.9"></path>
+                <path d="M167 68L177 83" stroke="#8eeeff" stroke-width="4" stroke-linecap="round" opacity="0.9"></path>
+              </svg>
+
+              <div class="shield-readout">
+                <span class="readout-label">Trust Index</span>
+                <strong>99.2%</strong>
+              </div>
+            </div>
+          </div>
+
+          <article class="float-card card-alert">
+            <div class="card-icon warning-icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 3L22 20H2L12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+                <path d="M12 8.7V13.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                <circle cx="12" cy="17.2" r="1" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <div>
+              <p>Deepfake Alert</p>
+              <strong>Face swap signatures found</strong>
+            </div>
+          </article>
+
+          <article class="float-card card-scan">
+            <div class="card-icon scan-icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M8 4H5V8M16 4H19V8M19 16V19H16M8 19H5V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M8.6 12H15.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <div>
+              <p>Live Scan</p>
+              <strong>4 anomaly clusters detected</strong>
+            </div>
+          </article>
+
+          <article class="float-card card-block">
+            <div class="card-icon block-icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 3L19 7V12C19 17 16.3 20.5 12 22C7.7 20.5 5 17 5 12V7L12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+                <path d="M9 12.1L11.1 14.2L15.2 10.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div>
+              <p>Phishing Link</p>
+              <strong>Blocked in 1.2 seconds</strong>
+            </div>
+          </article>
+
+          <article class="float-card card-voice">
+            <div class="card-icon voice-icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M5 13C6.4 13 6.4 9 7.8 9C9.2 9 9.2 15 10.6 15C12 15 12 7 13.4 7C14.8 7 14.8 17 16.2 17C17.6 17 17.6 11 19 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div>
+              <p>Voice Clone</p>
+              <strong>Confidence score: 96%</strong>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <section class="verification-modal" id="verificationModal" aria-hidden="true" hidden>
+      <div class="verification-backdrop" data-close-modal></div>
+
+      <div class="verification-panel" role="dialog" aria-modal="true" aria-labelledby="verificationTitle">
+        <div class="verification-panel-header">
+          <div class="verification-heading">
+            <p class="eyebrow verification-badge">
+              <span class="eyebrow-pulse"></span>
+              Guided browser-side verification
+            </p>
+            <h2 id="verificationTitle">Verification Assistant</h2>
+            <p class="verification-intro">
+              Review the live analytics dashboard or run one of the verification checks below. The current design stays the same on the page, and this workspace adds the interactive functionality.
+            </p>
+          </div>
+
+          <button class="modal-close" id="closeVerificationModal" type="button" aria-label="Close verification panel">
+            Close
+          </button>
+        </div>
+
+        <div class="verification-tabs" role="tablist" aria-label="Verification tools">
+          <button
+            class="verification-tab-button"
+            id="tab-button-dashboard"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tab-panel-dashboard"
+            data-tab-target="dashboard"
+          >
+            Analytics Dashboard
+          </button>
+          <button
+            class="verification-tab-button is-active"
+            id="tab-button-text"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tab-panel-text"
+            data-tab-target="text"
+          >
+            Text Verification
+          </button>
+          <button
+            class="verification-tab-button"
+            id="tab-button-image"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tab-panel-image"
+            data-tab-target="image"
+          >
+            Image Verification
+          </button>
+          <button
+            class="verification-tab-button"
+            id="tab-button-url"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tab-panel-url"
+            data-tab-target="url"
+          >
+            URL Verification
+          </button>
+        </div>
+
+        <p class="verification-status" id="verificationStatus" aria-live="polite" hidden></p>
+
+        <div class="scan-loading" id="scanLoading" aria-live="polite" hidden>
+          <span class="scan-loading-spinner" aria-hidden="true"></span>
+          <div class="scan-loading-copy">
+            <strong>AI Scan in Progress...</strong>
+            <p id="scanLoadingMessage">Reviewing scam signals and preparing the result card.</p>
+          </div>
+        </div>
+
+        <div class="verification-panels">
+          <section
+            class="verification-tab-panel"
+            id="tab-panel-dashboard"
+            role="tabpanel"
+            aria-labelledby="tab-button-dashboard"
+            data-tab-panel="dashboard"
+            hidden
+          >
+            <div class="dashboard-overview">
+              <article class="dashboard-banner">
+                <div>
+                  <span class="result-label">Live Security Overview</span>
+                  <h3 id="dashboardHeadline" tabindex="-1">Threat Analytics Dashboard</h3>
+                  <p class="dashboard-copy">
+                    Track scan volume, scam blocking activity, deepfake detections, trend movement, and the latest suspicious reports in one place.
+                  </p>
+                </div>
+
+                <div class="dashboard-banner-pulse">
+                  <span class="dashboard-status-dot"></span>
+                  Monitoring today
+                </div>
+              </article>
+
+              <div class="dashboard-metric-grid">
+                <article class="dashboard-metric-card">
+                  <span class="metric-label">Total Scans Today</span>
+                  <strong class="dashboard-metric-value" id="dashboardTotalScans">0</strong>
+                  <p class="dashboard-metric-note">Combined text, image, and URL checks</p>
+                </article>
+
+                <article class="dashboard-metric-card">
+                  <span class="metric-label">Scams Blocked</span>
+                  <strong class="dashboard-metric-value" id="dashboardScamsBlocked">0</strong>
+                  <p class="dashboard-metric-note">High-risk scam and phishing attempts intercepted</p>
+                </article>
+
+                <article class="dashboard-metric-card">
+                  <span class="metric-label">Deepfakes Detected</span>
+                  <strong class="dashboard-metric-value" id="dashboardDeepfakesDetected">0</strong>
+                  <p class="dashboard-metric-note">Synthetic and manipulated media findings today</p>
+                </article>
+              </div>
+
+              <div class="dashboard-detail-grid">
+                <article class="dashboard-chart-card">
+                  <div class="dashboard-card-header">
+                    <div>
+                      <span class="result-label">Threat Trends Graph</span>
+                      <h3>Threat Trends Graph</h3>
+                    </div>
+
+                    <span class="dashboard-trend-pill" id="dashboardTrendChange">+0%</span>
+                  </div>
+
+                  <div class="dashboard-chart-shell">
+                    <svg class="trend-chart" id="trendChart" viewBox="0 0 720 280" role="img" aria-label="Threat trends graph">
+                      <defs>
+                        <linearGradient id="trendLineGradient" x1="60" y1="30" x2="660" y2="220" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#7ef4da"></stop>
+                          <stop offset="50%" stop-color="#57c8ff"></stop>
+                          <stop offset="100%" stop-color="#ffbe72"></stop>
+                        </linearGradient>
+                        <linearGradient id="trendAreaFill" x1="0" y1="40" x2="0" y2="250" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#57c8ff" stop-opacity="0.28"></stop>
+                          <stop offset="100%" stop-color="#57c8ff" stop-opacity="0"></stop>
+                        </linearGradient>
+                      </defs>
+                      <line class="chart-grid-line" x1="60" y1="40" x2="660" y2="40"></line>
+                      <line class="chart-grid-line" x1="60" y1="95" x2="660" y2="95"></line>
+                      <line class="chart-grid-line" x1="60" y1="150" x2="660" y2="150"></line>
+                      <line class="chart-grid-line" x1="60" y1="205" x2="660" y2="205"></line>
+                      <line class="chart-grid-line" x1="60" y1="260" x2="660" y2="260"></line>
+                      <path class="trend-area" id="trendAreaPath"></path>
+                      <path class="trend-line" id="trendLinePath"></path>
+                      <g class="trend-points" id="trendPointsGroup"></g>
+                    </svg>
+                    <div class="trend-label-row" id="trendLabelRow"></div>
+                  </div>
+                </article>
+
+                <article class="dashboard-reports-card">
+                  <div class="dashboard-card-header">
+                    <div>
+                      <span class="result-label">Recent Reports</span>
+                      <h3>Recent Reports</h3>
+                    </div>
+
+                    <span class="dashboard-mini-chip" id="dashboardRecentCount">0 reports</span>
+                  </div>
+
+                  <ul class="recent-reports-list" id="recentReportsList"></ul>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="verification-tab-panel is-active"
+            id="tab-panel-text"
+            role="tabpanel"
+            aria-labelledby="tab-button-text"
+            data-tab-panel="text"
+          >
+            <form class="tool-form" id="textVerificationForm">
+              <div class="tool-panel-header">
+                <div>
+                  <span class="result-label">Frontend Ready Module</span>
+                  <h3 class="tool-section-title">Text Scam Verification</h3>
+                </div>
+                <span class="tool-endpoint">POST /api/verify/text</span>
+              </div>
+
+              <div class="tool-meta-grid">
+                <article class="tool-meta-card">
+                  <span class="result-label">Supports</span>
+                  <p>SMS, WhatsApp messages, emails, and chat messages.</p>
+                </article>
+                <article class="tool-meta-card">
+                  <span class="result-label">Output</span>
+                  <p>Probability score, risk level, red flags, and safety advice.</p>
+                </article>
+              </div>
+
+              <label class="tool-label" for="textToCheck">Paste suspicious text</label>
+              <p class="tool-hint">Use this for SMS, WhatsApp, email, social chat, or direct-message scams.</p>
+              <textarea
+                class="tool-input tool-textarea"
+                id="textToCheck"
+                placeholder="Paste a suspicious message here..."
+                required
+              ></textarea>
+
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Analyze Text</button>
+                <button class="btn btn-secondary tool-clear" type="button" data-clear-target="text">Clear</button>
+              </div>
+            </form>
+
+            <article class="result-card" id="textResultCard" aria-live="polite" hidden>
+              <div class="result-heading">
+                <h3>Text Scam Verification Result</h3>
+                <span class="result-badge" id="textRiskBadge">Low</span>
+              </div>
+
+              <div class="metrics-grid">
+                <div class="metric-box">
+                  <span class="metric-label">Scam Probability</span>
+                  <strong class="metric-value" id="textScamProbability">0%</strong>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Risk Level</span>
+                  <strong class="metric-value" id="textRiskLevel">Low</strong>
+                </div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">Red Flag Words</span>
+                <div class="chip-list" id="textRedFlags"></div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">Safety Advice</span>
+                <p class="result-copy" id="textSafetyAdvice"></p>
+              </div>
+            </article>
+          </section>
+
+          <section
+            class="verification-tab-panel"
+            id="tab-panel-image"
+            role="tabpanel"
+            aria-labelledby="tab-button-image"
+            data-tab-panel="image"
+            hidden
+          >
+            <form class="tool-form" id="imageVerificationForm">
+              <div class="tool-panel-header">
+                <div>
+                  <span class="result-label">Frontend Ready Module</span>
+                  <h3 class="tool-section-title">Image Fake &amp; Deepfake Verification</h3>
+                </div>
+                <span class="tool-endpoint">POST /api/verify/image</span>
+              </div>
+
+              <div class="tool-meta-grid">
+                <article class="tool-meta-card">
+                  <span class="result-label">Accepted Files</span>
+                  <p>JPG, JPEG, PNG, and WEBP uploads with live preview metadata.</p>
+                </article>
+                <article class="tool-meta-card">
+                  <span class="result-label">Output</span>
+                  <p>Confidence score, risk level, explanations, and recommendation.</p>
+                </article>
+              </div>
+
+              <label class="tool-label" for="imageToCheck">Upload suspicious image</label>
+              <p class="tool-hint">This module looks for common fake-image clues, manipulation hints, and synthetic-looking patterns.</p>
+              <input class="tool-input tool-file" id="imageToCheck" type="file" accept=".jpg,.jpeg,.png,.webp">
+
+              <div class="image-preview" id="imagePreview" hidden>
+                <img class="preview-image" id="imagePreviewImage" alt="Selected image preview">
+                <div class="preview-meta preview-meta-grid" id="imagePreviewMeta"></div>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Analyze Image</button>
+                <button class="btn btn-secondary tool-clear" type="button" data-clear-target="image">Clear</button>
+              </div>
+            </form>
+
+            <article class="result-card" id="imageResultCard" aria-live="polite" hidden>
+              <div class="result-heading">
+                <h3>Image Verification Result</h3>
+                <span class="result-badge" id="imageRiskBadge">Low</span>
+              </div>
+
+              <div class="metrics-grid">
+                <div class="metric-box">
+                  <span class="metric-label">Fake Image Confidence</span>
+                  <strong class="metric-value" id="imageFakeConfidence">0%</strong>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Risk Level</span>
+                  <strong class="metric-value" id="imageRiskLevel">Low</strong>
+                </div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">Explanation Report</span>
+                <ul class="result-list" id="imageExplanationList"></ul>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">Safety Recommendation</span>
+                <p class="result-copy" id="imageSafetyRecommendation"></p>
+              </div>
+            </article>
+          </section>
+
+          <section
+            class="verification-tab-panel"
+            id="tab-panel-url"
+            role="tabpanel"
+            aria-labelledby="tab-button-url"
+            data-tab-panel="url"
+            hidden
+          >
+            <form class="tool-form" id="urlVerificationForm">
+              <div class="tool-panel-header">
+                <div>
+                  <span class="result-label">Frontend Ready Module</span>
+                  <h3 class="tool-section-title">URL Scam &amp; Phishing Verification</h3>
+                </div>
+                <span class="tool-endpoint">POST /api/verify/url</span>
+              </div>
+
+              <div class="tool-meta-grid">
+                <article class="tool-meta-card">
+                  <span class="result-label">Checks</span>
+                  <p>Fake domains, suspicious keywords, HTTPS, phishing patterns, and shortened links.</p>
+                </article>
+                <article class="tool-meta-card">
+                  <span class="result-label">Output</span>
+                  <p>Status, trust score, threat reasons, and preview warning.</p>
+                </article>
+              </div>
+
+              <label class="tool-label" for="urlToCheck">Paste suspicious link</label>
+              <p class="tool-hint">Use this to inspect phishing patterns, fake domains, unsafe structure, and trust signals.</p>
+              <input
+                class="tool-input"
+                id="urlToCheck"
+                type="text"
+                inputmode="url"
+                placeholder="https://example.com"
+                required
+              >
+
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Analyze URL</button>
+                <button class="btn btn-secondary tool-clear" type="button" data-clear-target="url">Clear</button>
+              </div>
+            </form>
+
+            <article class="result-card" id="urlResultCard" aria-live="polite" hidden>
+              <div class="result-heading">
+                <h3>URL Verification Result</h3>
+                <span class="result-badge" id="urlStatusBadge">Safe</span>
+              </div>
+
+              <div class="metrics-grid">
+                <div class="metric-box">
+                  <span class="metric-label">Status</span>
+                  <strong class="metric-value" id="urlSafetyStatus">Safe</strong>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Trust Score</span>
+                  <strong class="metric-value" id="urlTrustScore">0%</strong>
+                </div>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">Threat Reason</span>
+                <ul class="result-list" id="urlThreatReasons"></ul>
+              </div>
+
+              <div class="result-block">
+                <span class="result-label">Preview Warning</span>
+                <p class="result-copy" id="urlPreviewWarning"></p>
+              </div>
+            </article>
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

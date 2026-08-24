@@ -1,0 +1,15 @@
+{
+  "name": "truthlens-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test:groq": "node testGroq.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "groq-sdk": "^1.1.2"
+  }
+}
